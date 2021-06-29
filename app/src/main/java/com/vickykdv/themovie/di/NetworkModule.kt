@@ -32,15 +32,13 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun providesApiKey() : Interceptor = object : Interceptor {
-        override fun intercept(chain: Interceptor.Chain): Response {
-            var request: Request = chain.request()
-            val url: HttpUrl = request.url.newBuilder()
+    fun providesApiKey() : Interceptor = Interceptor { chain ->
+        var request: Request = chain.request()
+        val url: HttpUrl = request.url.newBuilder()
                 .addQueryParameter("api_key", apiKey)
                 .build()
-            request = request.newBuilder().url(url).build()
-            return chain.proceed(request)
-        }
+        request = request.newBuilder().url(url).build()
+        chain.proceed(request)
     }
 
     @Provides

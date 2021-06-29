@@ -19,10 +19,7 @@ class PopularDataSource @Inject constructor(private val apiService: ApiService) 
             CompositeDisposable()
         }
 
-        override fun loadInitial(
-            params: PageKeyedDataSource.LoadInitialParams<Int>,
-            callback: PageKeyedDataSource.LoadInitialCallback<Int, DataMovie>
-        ) {
+        override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, DataMovie>) {
             apiService.getAllMovie(POPULAR, 1)
                 .map<MovieState>{
                     callback.onResult(it.data.toMutableList(), 1, 2)
